@@ -113,13 +113,11 @@ class AnimatedCircularChart extends StatefulWidget {
   /// ```dart
   /// AnimatedCircularChartState animatedCircularChart = AnimatedCircularChart.of(context);
   /// ```
-  static AnimatedCircularChartState of(BuildContext context,
-      {bool nullOk: false}) {
+  static AnimatedCircularChartState of(BuildContext context, {bool nullOk: false}) {
     assert(context != null);
     assert(nullOk != null);
 
-    final AnimatedCircularChartState result = context
-        .ancestorStateOfType(const TypeMatcher<AnimatedCircularChartState>());
+    final AnimatedCircularChartState result = context.findAncestorStateOfType<AnimatedCircularChartState>();
 
     if (nullOk || result != null) return result;
 
@@ -150,8 +148,7 @@ class AnimatedCircularChart extends StatefulWidget {
 /// ...
 /// chartKey.currentState.updateData(newData);
 /// ```
-class AnimatedCircularChartState extends State<AnimatedCircularChart>
-    with TickerProviderStateMixin {
+class AnimatedCircularChartState extends State<AnimatedCircularChart> with TickerProviderStateMixin {
   CircularChartTween _tween;
   AnimationController _animation;
   final Map<String, int> _stackRanks = <String, int>{};
@@ -188,8 +185,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
   @override
   void didUpdateWidget(AnimatedCircularChart oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.holeLabel != widget.holeLabel ||
-        oldWidget.labelStyle != widget.labelStyle) {
+    if (oldWidget.holeLabel != widget.holeLabel || oldWidget.labelStyle != widget.labelStyle) {
       _updateLabelPainter();
     }
   }
@@ -217,8 +213,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
 
   void _updateLabelPainter() {
     if (widget.holeLabel != null) {
-      TextStyle _labelStyle =
-          widget.labelStyle ?? Theme.of(context).textTheme.body2;
+      TextStyle _labelStyle = widget.labelStyle ?? Theme.of(context).textTheme.body2;
       _labelPainter
         ..text = new TextSpan(style: _labelStyle, text: widget.holeLabel)
         ..textDirection = Directionality.of(context)
